@@ -1,0 +1,96 @@
+python time：
+1、time.time()该函数返回从1970年1月日0点0分以来的秒数，这是一个浮点数，在编程中用来做时间戳。
+
+imort time
+print time.time()
+1372404899.33
+
+2、time.sleep(),通过调用time.sleep()来挂起当前的进程，time.sleep接收一个浮点型参数，表示进程挂起的时间,单位是秒。
+
+import time
+for i in range(5):
+    print i
+    time.sleep(2.222)
+3）time.ctime(),将一个时间戳(默认为当前时间)转换成一个时间字符串。
+
+import time
+print time.ctime(1372407691.07)
+Fri Jun 28 16:21:31 2013
+
+4）time.clock()返回第一次调用该方法到现在的秒数，其精确度高于1微妙，可以使用该函数来记录程序执行的时间。
+
+import time
+for i in range(3):
+...     print "程序执行时间： %s" % i
+...     time.sleep(1)
+...     print time.time(),time.ctime(),time.clock()
+...
+#########output#########
+#程序执行时间： 0
+1372410525.3 Fri Jun 28 17:08:45 2013 0.07
+#程序执行时间： 1
+#1372410526.3 Fri Jun 28 17:08:46 2013 0.07
+#程序执行时间： 2
+#1372410527.3 Fri Jun 28 17:08:47 2013 0.07
+
+5)time.gmtime()，该函数原型为：time.gmtime([sec])，可选的参数sec表示从1970-1-1以来的秒数。其默认值为time.time()，函数返回time.struct_time类型的对象。
+（struct_time是在time模块中定义的表示时间的对象）。
+
+import time
+print time.gmtime() //UTC格式返回的当前时间
+time.struct_time(tm_year=2013, tm_mon=6, tm_mday=28, tm_hour=8, tm_min=16, tm_sec=8, tm_wday=4, tm_yday=179, tm_isdst=0)
+
+6)time.localtime(),time.localtime与time.gmtime非常类似，也返回一个struct_time对象，可以把它看作是gmtime()的本地化版本。
+
+import time
+print time.localtime() //返回本地时间或者系统时间
+time.struct_time(tm_year=2013, tm_mon=6, tm_mday=28, tm_hour=17, tm_min=17, tm_sec=36, tm_wday=4, tm_yday=179, tm_isdst=0)
+
+7）time.mktime（），time.mktime执行与gmtime(), localtime()相反的操作，它接收struct_time对象作为参数，返回用秒数来表示时间的浮点数。
+
+import time
+#下面两个函数返回相同（或相近）的结果
+print time.mktime(time.localtime())
+1372645615.0
+print time.time()
+1372645613.24
+
+8）time.strptime（），按指定格式解析一个表示时间的字符串，返回struct_time对象。该函数原型为：time.strptime(string, format)，两个参数都是字符串。
+
+import time
+ct = time.ctime(1372407691.07)
+print time.strptime(ct)
+time.struct_time(tm_year=2013, tm_mon=6, tm_mday=28, tm_hour=16, tm_min=21, tm_sec=31, tm_wday=4, tm_yday=179, tm_isdst=-1)
+
+9）time.strftime（）将日期转换为字符串表示，它的函数原型为：time.strftime(format[, t])。参数format是格式字符串（格式字符串的知识可以参考：time.strftime），
+可选的参数t是一个struct_time对象。
+ python中时间日期格式化符号：
+ %y 两位数的年份表示（00-99）
+ %Y 四位数的年份表示（000-9999）
+ %m 月份（01-12）
+ %d 月内中的一天（0-31）
+ %H 24小时制小时数（0-23）
+ %I 12小时制小时数（01-12）
+ %M 分钟数（00=59）
+ %S 秒（00-59）
+
+ %a 本地简化星期名称
+ %A 本地完整星期名称
+ %b 本地简化的月份名称
+ %B 本地完整的月份名称
+ %c 本地相应的日期表示和时间表示
+ %j 年内的一天（001-366）
+ %p 本地A.M.或P.M.的等价符
+ %U 一年中的星期数（00-53）星期天为星期的开始
+ %w 星期（0-6），星期天为星期的开始
+ %W 一年中的星期数（00-53）星期一为星期的开始
+ %x 本地相应的日期表示
+ %X 本地相应的时间表示
+ %Z 当前时区的名称
+ %% %号本身 
+
+import time
+print time.strftime('%Y%m%d')
+20130701
+print time.strftime('%Y-%m-%d')
+2013-07-01

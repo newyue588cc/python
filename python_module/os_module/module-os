@@ -1,0 +1,74 @@
+#python os module study
+
+1、os.sep可以取代操作系统特定的路径分割符，在linux下是‘/’，在windows下是‘\\’,在mac os下是‘：’
+scri = os.sep + "opt" + os.sep + "scripts"
+scri
+
+2、获取当前路径
+os.getcwd()
+
+3、获取path的绝对路径
+os.path.abspath('locale')
+
+4、将path分割成目录和文件名二元组返回。
+mysqldir = "/var/run/mysql.sock"
+os.path.split(mysqldir)
+
+5、返回path的目录，其实就是os.path.split的第一个元素
+os.path.dirname(mysqldir)
+
+6、返回path的最后文件名，其实就是os.path.split的第二个元素。d
+os.path.basename(mysqldir)
+
+7、如果path存在，返回True，如果不存在，返回false
+os.path.exists(mysqldir)
+os.path.exists('/opt/scripts/ssh_wall.sh')
+
+8、如果path是绝对路径，返回True，否则返回false
+os.path.isabs(mysqldir)
+os.path.isabs('ssh_wall.sh')
+
+9、如果path是一个存在的文件，返回True,否则返回false
+os.path.isfile('locale')
+os.path.isfile('/root/file')
+
+10、如果path是一个存在的目录，返回True,否则返回false
+os.path.isdir('/root')
+os.path.isdir('/root/locale')
+
+11、返回制定目录下的所有文件和目录名
+os.listdir('/opt/scripts')
+
+12、连接目录与文件名
+os.path.john('/opt/scripts','ssh_wall.sh')
+
+13、创建一个目录
+os.mkdir('py')
+os.path.isdir('py')
+os.makedirs('aa/bb/cc')
+os.path.isdir('aa/bb/cc')
+
+14、删除目录
+os.rmdir('py')
+os.removedirs('aa/bb/cc')
+
+15、删除文件
+os.remove('ssh_wall.sh')
+
+16、切换目录
+os.chdir('/usr/local')
+os.path.abspath('.')
+
+17、返回操作系统的平台，windows是nt,linux及unix是posix
+os.name
+ 
+18、运行linux系统命令
+os.system('df -h')
+
+19、返回当前系统的登录用户
+os.getlogin()
+
+20、目录遍历，该函数返回一个元组，该元组有三个元素，分别是路径名，目录列表，文件列表
+for i in os.walk('/ops/scripts');
+	print i
+

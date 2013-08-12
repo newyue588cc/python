@@ -1,0 +1,37 @@
+python smtplib
+一、smtplib.SMTP([host[,port[,local_hostname[,timeout]]]])
+smtplib.SMTP提供一下方法：
+SMTP.set_debuglevel(level)设置是否为调试模式。默认为false，即非调试模式，表示不输出任何调试信息。
+SMTP.connect([host[,prot]])连接到指定的smtp服务器，参数分别表示smtp主机和端口，也可以用host:port方式指定：（如：smtp.163.com:25）
+SMTP.docmd(cmd[,argstring]) 向smtp服务器发送指令，可选参数argstring表示指定的参数。
+SMTP.helo([hostname])使用helo指令向服务器确认身份。
+SMTP.has_extn(name)判断指定名称在服务器邮件列表中是否存在，处于安全考虑，smtp服务器往往屏蔽了该指令。
+SMTP.verify(address)判断指定邮件地址是否在服务器中存在，处于安全考虑，smtp服务器往往屏蔽了该指令。
+SMTP.login(user,password)登录到smtp服务器，所有的smtp服务器必须在验证用户信息合法之后才允许发送邮件。
+SMTP.sendmail(from_addr,to_addrs,msg[,mail_options,rcpt_options])发送邮件，第三个参数msg是字符串，表示邮件。我们知道邮件一般由标题，发信人，收件人，邮件内容，附件等构成，发送有阿金的时候，要注意msg的格式。这个格式就是smtp协议中定义的格式。
+SMTP.quit()断开与SMTP服务器的连接，相当于发送quit指令。
+
+python中可以使用email模块来处理邮件信息，包括MIME和其它基于RFC2822的消息文档。使用这些模块来定义邮件的内容，是非常简单的。
+class email.mime.multipart.MIMEMultipart :多个MIME对象的集合
+class email.mime.audio.MIMEAudio : mime音频对象
+class email.mime.image.MIMEImage ：mime二进制文件对象
+class email.mime.text.MIMEText : mime文本对象
+
+
+#!/usr/local/bin/pthon
+#coding=utf-8
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+subject = '邮件主题'
+email_info = '''
+邮件正文
+'''
+maillist = ['zhangshifeng@tclub.cn','408146392@qq.com']
+msg = MIMEText(email_info,'plain','utf-8')
+msg['Subject'] = Header(subject,'utf-8')
+smtp =smtplib.SMTP()
+smtp.connect('smtp.163.com:25')
+smtp.login('shifeng_zhang88@163.com','password')
+smtp.sendmail('shifeng_zhang88@163.com',maillist,msg.as_string())
+smtp.quit()

@@ -1,0 +1,51 @@
+一、urlopen(url,data=None,proxies=None)
+参数url表示远程数据的路径，一般是http或者ftp路径
+参数data表示以get或者post方式提交到url的数据
+参数proxies表示用于代理的设置
+#encoding:utf-8
+import urllib
+def getUrl(url):
+	page = urllib.urlopen(url)
+	html = page.read()
+	print html
+getUrl("http://www.baidu.com")
+
+urlopen返回一个文件对象，它提供了如下方法：
+1、read(),readline(),readlines(),fileno(),close()这些方法的使用和使用文件对象的方法一样
+2、info():返回一个httplib.HTTPMessage对象，表示远程服务器的返回头信息
+3、getcode():返回http状态码，如果是http请求，200表示请求成功完成，404表示网址未找到
+4、geturl():返回请求的url地址
+
+#!/usr/bin/python
+#encoding:utf-8
+import urllib
+baidu = urllib.urlopen('http://www.baidu.com')
+print 'http header:\n',baidu.info()
+print 'http status:',baidu.getcode()
+print 'url:',baidu.geturl()
+for line in baidu:
+    print line,
+baidu.close()
+
+二、urlretrieve(url,filename=None,reporthook=None,data=None)
+参数filename指定了保存本地路径，如果参数未指定，urllib会生成一个临时文件保存数据。
+参数reporthook是一个回调函数，当连接上服务器，以及相应的数据块传输完毕时会触发该回调函数来显示当前的下载进度。
+参数data指post到服务器的数据，该方法返回一个包含两个元素的（filename,headers）元组，filename表示保存到本的路径，header表示服务器的响应头。
+
+#!/usr/bin/python
+#encoding:utf-8
+import urllib
+import os
+def Schedule(a,b,c):
+    '''''
+    a:已经下载的数据块
+    b:数据块的大小
+    c:远程文件的大小
+   '''
+    per = 100.0 * a * b / c
+    if per > 100 :
+        per = 100
+    print '%.2f%%' % per
+url = 'http://www.python.org/ftp/python/2.7.5/Python-2.7.5.tar.bz2'
+local = os.path.join('/data/software','Python-2.7.5.tar.bz2')
+urllib.urlretrieve(url,local,Schedule)
